@@ -26,16 +26,16 @@ let stats = {
 */
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + "/public/")
-})
+});
 
 app.get('/stats', function (req, res) {
 	res.sendFile(__dirname + "/public/stats.html")
-})
+});
 
 // start the server
 app.listen(8080, "localhost", (err) => {
-	if (err) console.error('error starting server', err);
-	else console.log('Server Started on port 8080');
+	if (err) console.error('error starting server', err)
+	else console.log('Server Started on port 8080')
 });
 
 
@@ -77,7 +77,7 @@ app.get('/img/:width/:height', async (req, res) => {
 	if (square <= "0") {
 		res.status(400).send("Please set the square size to above 0")
 		return
-	}
+	};
 
 	if (square % 1 == 0) {
 		square = Number(square);
@@ -86,7 +86,7 @@ app.get('/img/:width/:height', async (req, res) => {
 			res.status(400).send("Whole numbers only past the wall, in trumpscript we only do whole numbers")
 			return
 		}
-	}
+	};
 	
 	let text = req.query.text;
 	/**
@@ -106,7 +106,7 @@ app.get('/img/:width/:height', async (req, res) => {
 		if (parsed_url.query.text !== undefined) {
 			encoded_url.push(`?text=${encodeURIComponent(parsed_url.query.text)}`)
 		}
-	}
+	};
 	let encoded = encoded_url.join("");
 	
 	recent_path(encoded);
@@ -131,7 +131,7 @@ app.get('/img/:width/:height', async (req, res) => {
 app.get("/stats/paths/recent",(req, res) => {
 	res.send(stats.recent_path.reverse())
 	stats.recent_path.reverse() //Handle the issue of reference rather than value.
-})
+});
 
 /**
  * Get all the recent sizes api end point
@@ -140,7 +140,7 @@ app.get("/stats/paths/recent",(req, res) => {
 app.get("/stats/sizes/recent", (req, res) => {
 	res.send(stats.recent_sizes.reverse())
 	stats.recent_sizes.reverse()
-})
+});
 /**
  * Get all the recent texts api end point
  * This object is stored in reverse, so has to be reversed then unreversed
@@ -148,7 +148,7 @@ app.get("/stats/sizes/recent", (req, res) => {
 app.get("/stats/texts/recent", (req, res) => {
 	res.send(stats.recent_text.reverse())
 	stats.recent_text.reverse()
-})
+});
 /**
  * End point that get the top 10 sizes
  * Array has to be reversed inorder have data as requested, and information is sliced 
@@ -157,7 +157,7 @@ app.get("/stats/texts/recent", (req, res) => {
 app.get("/stats/sizes/top", (req, res) => {
 	let sorted = stats.top_sizes.sort(sortByProperty("n"))
 	res.send(sorted.reverse().slice(0, 10))
-})
+});
 
 /**
  * End point that get the top 10 referers
@@ -167,7 +167,7 @@ app.get("/stats/sizes/top", (req, res) => {
 app.get("/stats/referrers/top", (req, res) =>{
 	let sorted = stats.top_referrers.sort(sortByProperty("n"))
 	res.send(sorted.reverse().slice(0, 10))
-})
+});
 
 /**
  * End point for the sending of the time informatio
@@ -202,7 +202,7 @@ app.get("/stats/hits", (req, res) => {
 		}
 	});
 	res.send(time_json)
-})
+});
 /* 
 * End point for /stats that restets the entire 
 */
@@ -216,7 +216,7 @@ app.delete("/stats", (req, res) => {
 		"hits": []
 	}
 	res.send("Sucessfully reset stats objec")
-})
+});
 /*
 * This method takes a give object in an array and sorts the list by that property
 * In this case I sort two objects to get the top most results to present
@@ -243,7 +243,7 @@ function recent_path(encoded_url) {
 		stats.recent_path.shift()
 	}
 	stats.recent_path.push(encoded_url)
-}
+};
 
 /**
  * @param  {integer} width
@@ -265,7 +265,7 @@ function recent_sizes(width, height) {
 		stats.recent_sizes.shift()
 	}
 	stats.recent_sizes.push(width_height)
-}
+};
 
 /**
  * @param  {} width
@@ -289,7 +289,7 @@ function top_sizes(width,height) {
 		}
 		stats.top_sizes.push(stats_container)
 	}
-  }
+};
 
 /**
  * @param  {string} url
@@ -310,7 +310,7 @@ function recent_text(url) {
 		}
 		stats.recent_text.push(parsed_query_text)
 	}
-  }
+};
 
 /**
  * @param  {object} req
@@ -339,4 +339,4 @@ function top_referrers(req) {
 			stats.top_referrers.push(referrers_counter)
 		}
 	}
-}
+};
