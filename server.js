@@ -5,6 +5,9 @@ const imager = require('./imager');
 const url = require("url");
 const app = express();
 
+
+app.use(express.static(__dirname + '/public'))
+
 /**
  * Stats object setup to be used as a global variable for multiple 
  * statistic recording functionality
